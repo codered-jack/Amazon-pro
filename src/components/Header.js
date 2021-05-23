@@ -8,10 +8,12 @@ import { signIn, signOut, useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { selectItems } from '../slices/basketSlice';
+import {useState} from 'react';
 function Header() {
   const [session] = useSession();
   const router = useRouter();
   const items = useSelector(selectItems);
+  const [searchTerm,setSearchTerm]=useState();
   return (
     <header>
       <div className='flex items-center bg-amazon_blue p-1 flex-grow py-2'>
@@ -30,8 +32,10 @@ function Header() {
           <input
             type='text'
             className='p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4'
+            value={searchTerm}
+            onChange={(e)=>setSearchTerm(e.target.value)}
           />
-          <SearchIcon className='h-12 p-4' />
+          <SearchIcon className='h-12 p-4' onClick={()=>router.push(`/search?searchTerm=${searchTerm}`)}/>
         </div>
 
         <div className='text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
