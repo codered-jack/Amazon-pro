@@ -7,7 +7,7 @@ export default async (req, res) => {
     quantity: item.quantity,
     price_data: {
       currency: 'INR',
-      unit_amount: item.price * item.quantity * 100,
+      unit_amount: item.price * 100,
       product_data: {
         name: item.title,
         images: [item.image],
