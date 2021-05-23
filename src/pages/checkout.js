@@ -2,7 +2,7 @@ import Header from '../components/Header';
 import CheckoutProduct from '../components/CheckoutProduct';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
-import { selectItems,selectTotal } from '../slices/basketSlice';
+import { selectItems, selectTotal } from '../slices/basketSlice';
 import Currency from 'react-currency-formatter';
 import { useSession } from 'next-auth/client';
 function Checkout() {
@@ -28,19 +28,31 @@ function Checkout() {
                 ? 'Your Amazon Basket is empty'
                 : 'Your Shopping Basket'}
             </h1>
-            {items.map((item, i) => (
-              <CheckoutProduct
-                key={i}
-                id={item.id}
-                title={item.title}
-                rating={item.rating}
-                price={item.price}
-                description={item.description}
-                category={item.category}
-                image={item.image}
-                hasPrime={item.hasPrime}
-              />
-            ))}
+            {items.length === 0 && (
+              <div>
+                <Image
+                  className='flex'
+                  src='https://m.media-amazon.com/images/G/01/cart/empty/kettle-desaturated._CB445243794_.svg'
+                  height={600}
+                  width={600}
+                  objectFit='contain'
+                />
+              </div>
+            )}
+              {items.map((item, i) => (
+                <CheckoutProduct
+                  key={i}
+                  id={item.id}
+                  title={item.title}
+                  rating={item.rating}
+                  price={item.price}
+                  description={item.description}
+                  category={item.category}
+                  image={item.image}
+                  hasPrime={item.hasPrime}
+                  quantity={item.quantity}
+                />
+              ))}
           </div>
         </div>
 
@@ -50,10 +62,16 @@ function Checkout() {
               <h2 className='whitespace-nowrap'>
                 Subtotal ({items.length} items) : &nbsp;
                 <span className='font-bold'>
-                    <Currency quantity={total} currency='INR'/>
+                  <Currency quantity={total} currency='INR' />
                 </span>
               </h2>
-              <button disabled={!session} className={`button mt-2 ${!session && 'from-gray-300 to-gray-500 border-gray-200 text-gray-200 cursor-not-allowed'}`}>
+              <button
+                disabled={!session}
+                className={`button mt-2 ${
+                  !session &&
+                  'from-gray-300 to-gray-500 border-gray-200 text-gray-200 cursor-not-allowed'
+                }`}
+              >
                 {!session ? 'Sign In to checkout' : 'Proceed to Checkout'}
               </button>
             </>

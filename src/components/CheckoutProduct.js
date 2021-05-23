@@ -1,8 +1,12 @@
 import Image from 'next/image';
-import { StarIcon } from '@heroicons/react/solid';
+import { StarIcon, AddIcon, MinusIcon } from '@heroicons/react/solid';
 import Currency from 'react-currency-formatter';
 import { useDispatch } from 'react-redux';
-import { addToBasket, removeFromBasket } from '../slices/basketSlice';
+import {
+  addToBasket,
+  removeFromBasket,
+  removeOneFromBasket,
+} from '../slices/basketSlice';
 function CheckoutProduct({
   id,
   title,
@@ -12,6 +16,7 @@ function CheckoutProduct({
   category,
   image,
   hasPrime,
+  quantity,
 }) {
   const dispatch = useDispatch();
 
@@ -32,6 +37,10 @@ function CheckoutProduct({
 
   const removeItemFromBasket = () => {
     dispatch(removeFromBasket({ id }));
+  };
+
+  const removeOneItemFromBasket = () => {
+    dispatch(removeOneFromBasket({ id }));
   };
   return (
     <div className='grid grid-cols-5'>
@@ -63,9 +72,35 @@ function CheckoutProduct({
       </div>
 
       <div className='flex flex-col space-y-2 my-auto justify-self-end'>
-        <button className='button' onClick={addItemToBasket}>
-          Add To Basket
-        </button>
+        <div className='flex items-center'>
+          <button
+            className='button'
+            onClick={
+              quantity === 1 ? removeItemFromBasket : removeOneItemFromBasket
+            }
+          >
+            <MinusIcon className='h-5' />
+          </button>
+
+          <div className='items-center mx-auto font-bold'>{quantity}</div>
+
+          <button className='button' onClick={addItemToBasket}>
+            <svg
+              className='h-5'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M12 6v6m0 0v6m0-6h6m-6 0H6'
+              />
+            </svg>
+          </button>
+        </div>
         <button className='button' onClick={removeItemFromBasket}>
           Remove From Basket
         </button>
