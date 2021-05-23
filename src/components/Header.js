@@ -32,6 +32,7 @@ function Header() {
           <input
             type='text'
             className='p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4'
+            placeholder='Search...'
             value={searchTerm}
             onChange={(e)=>setSearchTerm(e.target.value)}
           />
