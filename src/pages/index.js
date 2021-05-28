@@ -3,6 +3,8 @@ import Banner from '../components/Banner';
 import Header from '../components/Header';
 import ProductFeed from '../components/ProductFeed';
 import { getSession } from 'next-auth/client';
+import Footer from '../components/Footer';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 export default function Home({ products }) {
   return (
     <div className='bg-gray-100'>
@@ -17,6 +19,7 @@ export default function Home({ products }) {
         <Banner />
         <ProductFeed products={products} />
       </main>
+      <Footer/>
     </div>
   );
 }

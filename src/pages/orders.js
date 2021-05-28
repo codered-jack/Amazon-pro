@@ -3,6 +3,7 @@ import { useSession, getSession } from 'next-auth/client';
 import db from '../../firebase';
 import moment from 'moment';
 import Order from '../components/Order';
+import Footer from '../components/Footer';
 function orders({ orders }) {
   const [session] = useSession();
   return (
@@ -35,6 +36,8 @@ function orders({ orders }) {
           )}
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
